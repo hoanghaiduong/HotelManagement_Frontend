@@ -1,13 +1,70 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { MouseEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
+import { AuthDTO } from "../../common/types/AuthTypes";
+import Swal from "sweetalert2";
+import axiosInstance from "../../common/configs/axiosInstance";
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [formData, setFormData] = useState<AuthDTO>({
+    email: "",
+    password: "",
+  });
+  const handleClick = async (e: MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    // Kiểm tra điều kiện trước khi gửi request
+    if (!formData.email || !formData.password) {
+      Swal.fire("Error", "Please fill in all fields", "error");
+      return;
+    }
+    try {
+      setLoading(true);
+    } catch (error) {}
+    try {
+      setLoading(true);
+      const response = await axiosInstance.post("/Auth/signup", formData);
+      console.log(response.data);
+      // Hiển thị thông báo thành công
+      Swal.fire("Success", "You have signed up successfully!", "success").then(
+        () => {
+          navigate("/signin");
+        }
+      );
+    } catch (error: any) {
+      console.error(error?.message);
+      Swal.fire("Error", error?.message || "Signup failed", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (loading) {
+      Swal.fire({
+        title: "Signing up...",
+        html: "Please wait while we process your request.",
+        timer: 700,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+    }
+  }, [loading]);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   return (
     <div className="flex flex-col flex-1 w-full overflow-y-auto lg:w-1/2 no-scrollbar">
       <div className="w-full max-w-md mx-auto mb-5 sm:pt-10">
@@ -82,34 +139,8 @@ export default function SignUpForm() {
                 </span>
               </div>
             </div>
-            <form>
+            <div>
               <div className="space-y-5">
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                  {/* <!-- First Name --> */}
-                  <div className="sm:col-span-1">
-                    <Label>
-                      First Name<span className="text-error-500">*</span>
-                    </Label>
-                    <Input
-                      type="text"
-                      id="fname"
-                      name="fname"
-                      placeholder="Enter your first name"
-                    />
-                  </div>
-                  {/* <!-- Last Name --> */}
-                  <div className="sm:col-span-1">
-                    <Label>
-                      Last Name<span className="text-error-500">*</span>
-                    </Label>
-                    <Input
-                      type="text"
-                      id="lname"
-                      name="lname"
-                      placeholder="Enter your last name"
-                    />
-                  </div>
-                </div>
                 {/* <!-- Email --> */}
                 <div>
                   <Label>
@@ -119,6 +150,8 @@ export default function SignUpForm() {
                     type="email"
                     id="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="Enter your email"
                   />
                 </div>
@@ -130,11 +163,16 @@ export default function SignUpForm() {
                   <div className="relative">
                     <Input
                       placeholder="Enter your password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
                       type={showPassword ? "text" : "password"}
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
+                      className="absolute z-30 -translate-y-1/2 cursor-pointer right-4
+
+top-1/2"
                     >
                       {showPassword ? (
                         <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
@@ -151,7 +189,11 @@ export default function SignUpForm() {
                     checked={isChecked}
                     onChange={setIsChecked}
                   />
-                  <p className="inline-block font-normal text-gray-500 dark:text-gray-400">
+                  <p
+                    className="inline-block font-normal text-gray-500
+
+dark:text-gray-400"
+                  >
                     By creating an account means you agree to the{" "}
                     <span className="text-gray-800 dark:text-white/90">
                       Terms and Conditions,
@@ -164,13 +206,17 @@ export default function SignUpForm() {
                 </div>
                 {/* <!-- Button --> */}
                 <div>
-                  <button className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
+                  <button
+                    className="flex items-center justify-center w-full px-4 py-3 text-sm
+font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs
+hover:bg-brand-600"
+                    onClick={(e: any) => handleClick(e)}
+                  >
                     Sign Up
                   </button>
                 </div>
               </div>
-            </form>
-
+            </div>
             <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
                 Already have an account? {""}

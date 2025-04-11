@@ -2,8 +2,11 @@ import { useState } from "react";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { Link } from "react-router";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/slices/authSlice";
 
 export default function UserDropdown() {
+  const user=useSelector(selectUser);
   const [isOpen, setIsOpen] = useState(false);
 
   function toggleDropdown() {
@@ -51,7 +54,7 @@ export default function UserDropdown() {
       >
         <div>
           <span className="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">
-            Musharof Chowdhury
+            {user?.email}
           </span>
           <span className="mt-0.5 block text-theme-xs text-gray-500 dark:text-gray-400">
             randomuser@pimjo.com

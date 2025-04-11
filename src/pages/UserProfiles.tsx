@@ -3,8 +3,27 @@ import UserMetaCard from "../components/UserProfile/UserMetaCard";
 import UserInfoCard from "../components/UserProfile/UserInfoCard";
 import UserAddressCard from "../components/UserProfile/UserAddressCard";
 import PageMeta from "../components/common/PageMeta";
+import { useSelector } from "react-redux";
+import { selectAuth } from "../redux/slices/authSlice";
+import { useParams } from "react-router";
+import { useEffect } from "react";
+import axiosInstance from "../common/configs/axiosInstance";
 
 export default function UserProfiles() {
+  const auth = useSelector(selectAuth);
+  const { id } = useParams();
+
+  console.log(id);
+  console.log(auth);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data } = await axiosInstance.get(`/User/${id}`);
+      console.log(data)
+    };
+    getUser();
+  }, []);
+
   return (
     <>
       <PageMeta

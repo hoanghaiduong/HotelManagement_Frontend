@@ -7,6 +7,8 @@ import { EventInput, DateSelectArg, EventClickArg } from "@fullcalendar/core";
 import { Modal } from "../components/ui/modal";
 import { useModal } from "../hooks/useModal";
 import PageMeta from "../components/common/PageMeta";
+import { useDispatch, useSelector } from "react-redux";
+import { login, selectAuth } from "../redux/slices/authSlice";
 
 interface CalendarEvent extends EventInput {
   extendedProps: {
@@ -15,6 +17,10 @@ interface CalendarEvent extends EventInput {
 }
 
 const Calendar: React.FC = () => {
+  const auth=useSelector(selectAuth)
+  const dispatch=useDispatch();
+  console.log(auth)
+  
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
     null
   );
@@ -117,6 +123,7 @@ const Calendar: React.FC = () => {
 
   return (
     <>
+  
       <PageMeta
         title="React.js Calendar Dashboard | TailAdmin - Next.js Admin Dashboard Template"
         description="This is React.js Calendar Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
