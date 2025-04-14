@@ -1,7 +1,7 @@
 import axios from "axios";
 import Constants from "./Constants";
 import { store } from "../../redux/store";
-import { logout, setToken } from "../../redux/slices/authSlice";
+import { logout, setToken } from "../../redux/slices/auth/authSlice";
 const axiosInstance = axios.create({
   baseURL: Constants.BASE_URL_BACKEND + "/api", // Prefix API
   timeout: 10000, // Thời gian timeout (10 giây)

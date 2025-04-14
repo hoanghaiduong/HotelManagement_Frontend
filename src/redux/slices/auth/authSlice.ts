@@ -4,7 +4,7 @@ import {
   AuthState,
   LoginPayload,
   TokenModel,
-} from "../../common/types/AuthTypes";
+} from "../../../common/types/AuthTypes";
 
 const initialState: AuthState = {
   user: null,

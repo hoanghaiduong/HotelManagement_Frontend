@@ -8,7 +8,7 @@ import { Modal } from "../components/ui/modal";
 import { useModal } from "../hooks/useModal";
 import PageMeta from "../components/common/PageMeta";
 import { useDispatch, useSelector } from "react-redux";
-import { login, selectAuth } from "../redux/slices/authSlice";
+import { login, selectAuth } from "../redux/slices/auth/authSlice";
 
 interface CalendarEvent extends EventInput {
   extendedProps: {

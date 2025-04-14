@@ -11,7 +11,7 @@ import {
   login,
   selectIsAdminOrEmployee,
   selectIsAuthenticated,
-} from "../../redux/slices/authSlice";
+} from "../../redux/slices/auth/authSlice";
 import Swal from "sweetalert2";
 import axiosInstance from "../../common/configs/axiosInstance";
 import { Role } from "../../common/types/AuthTypes";

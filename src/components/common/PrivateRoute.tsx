@@ -3,7 +3,7 @@ import { Navigate } from "react-router";
 import {
   selectIsAdminOrEmployee,
   selectIsAuthenticated,
-} from "../../redux/slices/authSlice";
+} from "../../redux/slices/auth/authSlice";
 import { useSelector } from "react-redux";
 interface PrivateRouteProps {
   children: ReactNode;
