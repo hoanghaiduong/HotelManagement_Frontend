@@ -11,7 +11,7 @@ import { persistor, store } from "./redux/store.ts";
 import { PersistGate } from "redux-persist/integration/react";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+  // <StrictMode>
     <ThemeProvider>
       <AppWrapper>
         <Provider store={store}>
@@ -21,5 +21,5 @@ createRoot(document.getElementById("root")!).render(
         </Provider>
       </AppWrapper>
     </ThemeProvider>
-  </StrictMode>
+  // </StrictMode>
 );

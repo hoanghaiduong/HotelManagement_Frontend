@@ -20,6 +20,7 @@ import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import Constants from "./common/configs/Constants";
 import PrivateRoute from "./components/common/PrivateRoute";
+import UserManager from "./pages/Users/UserManager";
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
             }
           >
             <Route index path="/" element={<Home />} />
+            <Route path="/users" element={<UserManager />} />
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/profile/:id" element={<UserProfiles />} />
           </Route>

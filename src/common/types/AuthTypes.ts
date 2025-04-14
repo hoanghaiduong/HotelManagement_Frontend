@@ -10,6 +10,9 @@ export interface User {
   phoneNumber?: string;
   isDisabled?: boolean;
   //thêm 1 số thuộc tính khác nếu cần
+
+
+  
   roles?: Role[];
 }
 export interface TokenModel {
