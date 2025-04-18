@@ -1,0 +1,2 @@
+sau khi clone thì cài đặt các deps
+npm install

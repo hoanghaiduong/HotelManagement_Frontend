@@ -7,7 +7,7 @@ export interface User {
   firstName?: string | any;
   lastName?: string | any;
   address?: string;
-  phoneNumber?: string;
+  phoneNumber?: string|any;
   isDisabled?: boolean;
   //thêm 1 số thuộc tính khác nếu cần
 

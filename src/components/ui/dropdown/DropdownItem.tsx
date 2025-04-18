@@ -4,6 +4,7 @@ import { Link } from "react-router";
 interface DropdownItemProps {
   tag?: "a" | "button";
   to?: string;
+  state?:Object;
   onClick?: () => void;
   onItemClick?: () => void;
   baseClassName?: string;
@@ -14,6 +15,7 @@ interface DropdownItemProps {
 export const DropdownItem: React.FC<DropdownItemProps> = ({
   tag = "button",
   to,
+  state,
   onClick,
   onItemClick,
   baseClassName = "block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900",
@@ -32,7 +34,7 @@ export const DropdownItem: React.FC<DropdownItemProps> = ({
 
   if (tag === "a" && to) {
     return (
-      <Link to={to} className={combinedClasses} onClick={handleClick}>
+      <Link to={to} state={state} className={combinedClasses} onClick={handleClick}>
         {children}
       </Link>
     );

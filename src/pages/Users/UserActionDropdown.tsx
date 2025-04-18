@@ -76,10 +76,7 @@ p-2"
       >
         <DropdownItem
           tag="a"
-          to={{
-            pathname: `/profile/${user?.id}`,
-            state: { user }, // truyền user vào state
-          }}
+          to={`/profile/${user?.id}`}
           onItemClick={closeDropdown}
           className="flex items-center gap-3 px-3 py-2 w-full font-normal text-left
 text-gray-500 rounded-lg hover:bg-gray-100 hover:text-gray-700
