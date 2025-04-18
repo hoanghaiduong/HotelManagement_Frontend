@@ -67,7 +67,7 @@ const UserTables: React.FC<{
               {users.map((item, idx) => {
                 return (
                   <TableRow key={item.id}>
-                    <TableCell className="px-5 py-4 sm:px-6 text-start">
+                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-white">
                       {item.id}
                     </TableCell>
                     <TableCell className="px-5 py-4 sm:px-6 text-start">
@@ -82,7 +82,7 @@ const UserTables: React.FC<{
                       </div>
                     </TableCell>
                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                      <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                      <span className="block text-3xl font-medium text-gray-500 text-theme-sm dark:text-white/90">
                         {item.email}
                       </span>
                     </TableCell>

@@ -15,6 +15,7 @@ export const fetchUsers = createAsyncThunk<UserResponse, FetchUsersPayload>(
         Search: Search?.trim() || null,
       },
     });
+   
     return response.data;
   }
 );

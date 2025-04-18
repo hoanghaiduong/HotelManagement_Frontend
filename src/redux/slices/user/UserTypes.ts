@@ -2,21 +2,18 @@
 import { User } from "../../../common/types/AuthTypes";
 
 
-export interface PaginationInfo {
-  currentPage: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  nextPage: number | null;
-  pageSize: number;
-  previousPage: number | null;
-  totalCount: number;
-  totalPages: number;
-}
 
 
 export interface UserResponse {
   items: User[];
-  pagination?: PaginationInfo;
+  currentPage?: number;
+  hasNextPage?: boolean;
+  hasPreviousPage?: boolean;
+  nextPage?: number | null;
+  pageSize?: number;
+  previousPage?: number | null;
+  totalCount?: number;
+  totalPages?: number;
 }
 
 export interface UserState {

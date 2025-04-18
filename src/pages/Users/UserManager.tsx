@@ -42,20 +42,25 @@ const UserManager = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(0);
 
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  // Hàm debounce để trì hoãn tìm kiếm
-  const debounce = (func: Function, delay: number) => {
-    let timeoutId: NodeJS.Timeout;
-    return (...args: any[]) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => func(...args), delay);
-    };
-  };
-  // Hàm xử lý tìm kiếm với debounce
-  const handleSearchChange = debounce((value: string) => {
-    setSearchTerm(value);
-    setCurrentPage(1); // Reset về trang đầu khi tìm kiếm
-  }, 500);
+  // // Hàm debounce để trì hoãn tìm kiếm
+  // const debounce = (func: Function, delay: number) => {
+  //   let timeoutId: NodeJS.Timeout;
+  //   return (...args: any[]) => {
+  //     clearTimeout(timeoutId);
+  //     timeoutId = setTimeout(() => func(...args), delay);
+  //   };
+  // };
+  const [searchTerm, setSearchTerm] = useState<string>(""); // Dùng cho input
+  const [debouncedSearch, setDebouncedSearch] = useState<string>(""); // Dùng gọi API
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+      setCurrentPage(1);
+    }, 500);
+
+    return () => clearTimeout(timer); // cleanup
+  }, [searchTerm]);
 
   useEffect(() => {
     dispatch(
@@ -63,16 +68,20 @@ const UserManager = () => {
         PageNumber: currentPage,
         PageSize: pageSize,
         Depth: 1,
-        Search: searchTerm,
+        Search: debouncedSearch,
       })
     );
-    const pagination = data.pagination;
-    if (data.pagination) {
-      setTotalPages(pagination?.totalPages!);
-      setTotalCount(pagination?.totalCount!);
+    if (data) {
+    
+      setTotalPages(data?.totalPages!);
+      setTotalCount(data?.totalCount!);
     }
-  }, [currentPage, pageSize, searchTerm, reload]);
+  }, [currentPage, pageSize, debouncedSearch, reload]);
 
+  const handleSearchChange = useCallback((value: string) => {
+    setSearchTerm(value);
+  }, []);
+  
   if (loading) {
     return <p>Loading...</p>;
   } else if (error) {
@@ -113,17 +122,22 @@ const UserManager = () => {
           </div>
 
           <TableControls
-            onSearchChange={handleSearchChange}
+            searchValue={searchTerm}
+            onSearchChange={handleSearchChange} // cập nhật input ngay
             onEntriesChange={(value) => {
               setPageSize(value);
               setCurrentPage(1);
             }}
           />
-          <UserTables users={data.items} onRefresh={handleRefresh} />
-          {/*Có thể dùng table khác ở đây*/}
+          {loading ? (
+            <div className="text-center py-10">Đang tải dữ liệu...</div>
+          ) : (
+            <UserTables users={data.items} onRefresh={handleRefresh} />
+          )}
+        
           <Pagination
             currentPage={currentPage}
-            onPageChange={() => {}}
+            onPageChange={(page) => setCurrentPage(page)}
             totalCount={totalCount}
             totalPages={totalPages}
           />

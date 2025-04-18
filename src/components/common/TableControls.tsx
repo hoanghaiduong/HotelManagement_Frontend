@@ -1,16 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ChevronDownIcon } from "../../icons";
-export default function TableControls({
+export default React.memo(function TableControls({
+  searchValue,
   onSearchChange,
   onEntriesChange,
   containerStyle,
 }: {
+  searchValue: string;
   onSearchChange?: (value: string) => void;
   onEntriesChange?: (value: number) => void;
   containerStyle?: string;
 }) {
   const [entries, setEntries] = useState(10);
-  const [searchTerm, setSearchTerm] = useState("");
+
   const handleEntriesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = parseInt(e.target.value, 10);
     setEntries(value);
@@ -18,7 +20,7 @@ export default function TableControls({
   };
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setSearchTerm(value);
+
     onSearchChange?.(value); // gọi callback nếu có
   };
   return (
@@ -92,7 +94,7 @@ pointer-events-none"
           </button>
           <input
             type="text"
-            value={searchTerm}
+            value={searchValue}
             onChange={handleSearchChange}
             placeholder="Search or type command..."
             className="dark:bg-dark-900 h-11 w-full rounded-lg border
@@ -110,10 +112,10 @@ bg-gray-50 px-[7px] py-[4.5px] text-xs -tracking-[0.2px] text-gray-500
 dark:border-gray-800 dark:bg-white/[0.03] dark:text-gray-400"
           >
             <span>⌘</span>
-            <span>K</span>
+            <span>Enter</span>
           </button>
         </div>
       </div>
     </div>
   );
-}
+});

@@ -7,7 +7,6 @@ import { fetchUser, fetchUsers } from "./UserThunk";
 const initialState: UserState = {
   data: {
     items: [],
-    pagination: undefined,
   },
   selectedUser: undefined,
   loading: false,
