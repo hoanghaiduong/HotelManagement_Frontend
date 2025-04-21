@@ -1,28 +1,28 @@
 import React, { useState } from "react";
 import { ChevronDownIcon } from "../../icons";
 export default React.memo(function TableControls({
-  searchValue,
   onSearchChange,
   onEntriesChange,
   containerStyle,
 }: {
-  searchValue: string;
   onSearchChange?: (value: string) => void;
   onEntriesChange?: (value: number) => void;
   containerStyle?: string;
 }) {
   const [entries, setEntries] = useState(10);
-
+  const [searchTerm, setSearchTerm] = useState("");
   const handleEntriesChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = parseInt(e.target.value, 10);
     setEntries(value);
     onEntriesChange?.(value); // gọi callback nếu có
   };
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
 
+  const handleSearchChange = (e:
+    React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
     onSearchChange?.(value); // gọi callback nếu có
-  };
+    };
   return (
     <div
       className={`flex flex-col sm:flex-row sm:items-center
@@ -94,7 +94,7 @@ pointer-events-none"
           </button>
           <input
             type="text"
-            value={searchValue}
+            value={searchTerm}
             onChange={handleSearchChange}
             placeholder="Search or type command..."
             className="dark:bg-dark-900 h-11 w-full rounded-lg border

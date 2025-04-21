@@ -1,79 +1,84 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 
-// Assume these icons are imported from an icon library
+// Assume these icons are imported from an icon library;
 import {
-  BoxCubeIcon,
+  BoxIcon,
   CalenderIcon,
-  CheckCircleIcon,
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  ListIcon,
-  PageIcon,
-  PieChartIcon,
-  PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
+  TaskIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
+import path from "path";
+
 
 type NavItem = {
   name: string;
   icon: React.ReactNode;
   path?: string;
-  subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
+  subItems?: {
+    name: string;
+    path: string;
+    pro?: boolean;
+    new?: boolean;
+    icon?: React.ReactNode;
+  }[];
 };
 
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
-  },
-  {
-    icon: <CheckCircleIcon />,
-    name: "UserManagement",
-    path: "/users",
-  },
-  {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
 
+    subItems: [{ name: "Tổng quan", path: "/", pro: false, icon: <BoxIcon /> }],
+  },
+  {
+    icon: <CalenderIcon />,
+    name: "Calendar",
+    path: "/calendar",
+  },
+  {
+    name: "Quản Lý",
+    icon: <TaskIcon />,
+    subItems: [
+      {
+        name: "Quản lý người dùng",
+        path: "/users",
+        icon: <TaskIcon />,
+      },
+      {
+        name: "Quản lý quyền",
+        path: "/roles",
+        icon: <TaskIcon />,
+      },
+      {
+        name: "Quản lý loại phòng",
+        path: "/roomTypes",
+        icon: <TaskIcon />,
+      },
+      {
+        name: "Quản lý dịch vụ phòng",
+        path: "/services",
+
+        icon: <TaskIcon />,
+      },
+    ],
+  },
 ];
 
 const othersItems: NavItem[] = [
-  // {
-  //   icon: <PieChartIcon />,
-  //   name: "Charts",
-  //   subItems: [
-  //     { name: "Line Chart", path: "/line-chart", pro: false },
-  //     { name: "Bar Chart", path: "/bar-chart", pro: false },
-  //   ],
-  // },
-  // {
-  //   icon: <BoxCubeIcon />,
-  //   name: "UI Elements",
-  //   subItems: [
-  //     { name: "Alerts", path: "/alerts", pro: false },
-  //     { name: "Avatar", path: "/avatars", pro: false },
-  //     { name: "Badge", path: "/badge", pro: false },
-  //     { name: "Buttons", path: "/buttons", pro: false },
-  //     { name: "Images", path: "/images", pro: false },
-  //     { name: "Videos", path: "/videos", pro: false },
-  //   ],
-  // },
-  // {
-  //   icon: <PlugInIcon />,
-  //   name: "Authentication",
-  //   subItems: [
-  //     { name: "Sign In", path: "/signin", pro: false },
-  //     { name: "Sign Up", path: "/signup", pro: false },
-  //   ],
-  // },
+// {
+// icon: <PieChartIcon />,
+// name: "Charts",
+// subItems: [
+// { name: "Line Chart", path: "/line-chart",pro: false },
+// { name: "Bar Chart", path: "/bar-chart", pro:false },
+// ],
+// },
+
 ];
 
 const AppSidebar: React.FC = () => {
@@ -89,7 +94,8 @@ const AppSidebar: React.FC = () => {
   );
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  // const isActive = (path: string) => location.pathname === path;
+  // const isActive = (path: string) =>
+  location.pathname === path;
   const isActive = useCallback(
     (path: string) => location.pathname === path,
     [location.pathname]
@@ -162,7 +168,7 @@ const AppSidebar: React.FC = () => {
               }`}
             >
               <span
-                className={`menu-item-icon-size  ${
+                className={`menu-item-icon-size ${
                   openSubmenu?.type === menuType && openSubmenu?.index === index
                     ? "menu-item-icon-active"
                     : "menu-item-icon-inactive"
@@ -175,7 +181,8 @@ const AppSidebar: React.FC = () => {
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
                 <ChevronDownIcon
-                  className={`ml-auto w-5 h-5 transition-transform duration-200 ${
+                  className={`ml-auto w-5 h-5
+transition-transform duration-200 ${
                     openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
                       ? "rotate-180 text-brand-500"
@@ -212,7 +219,8 @@ const AppSidebar: React.FC = () => {
               ref={(el) => {
                 subMenuRefs.current[`${menuType}-${index}`] = el;
               }}
-              className="overflow-hidden transition-all duration-300"
+              className="overflow-hidden
+transition-all duration-300"
               style={{
                 height:
                   openSubmenu?.type === menuType && openSubmenu?.index === index
@@ -225,14 +233,22 @@ const AppSidebar: React.FC = () => {
                   <li key={subItem.name}>
                     <Link
                       to={subItem.path}
-                      className={`menu-dropdown-item ${
-                        isActive(subItem.path)
-                          ? "menu-dropdown-item-active"
-                          : "menu-dropdown-item-inactive"
-                      }`}
+                      className={`menu-dropdown-item
+${
+  isActive(subItem.path)
+    ? "menu-dropdown-item-active"
+    : "menu-dropdown-item-inactive"
+}`}
                     >
+                      <span className={`menu-item-icon-size`}>
+                        {subItem.icon}
+                      </span>
                       {subItem.name}
-                      <span className="flex items-center gap-1 ml-auto">
+
+                      <span
+                        className="flex
+items-center gap-1 ml-auto"
+                      >
                         {subItem.new && (
                           <span
                             className={`ml-auto ${
@@ -244,6 +260,7 @@ const AppSidebar: React.FC = () => {
                             new
                           </span>
                         )}
+
                         {subItem.pro && (
                           <span
                             className={`ml-auto ${
@@ -269,16 +286,20 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
-        ${
-          isExpanded || isMobileOpen
-            ? "w-[290px]"
-            : isHovered
-            ? "w-[290px]"
-            : "w-[90px]"
-        }
-        ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
-        lg:translate-x-0`}
+      className={`fixed mt-16 flex flex-col lg:mt-0
+top-0 px-5 left-0 bg-white dark:bg-gray-900
+dark:border-gray-800 text-gray-900 h-screen
+transition-all duration-300 ease-in-out z-50 border-r
+border-gray-200
+${
+  isExpanded || isMobileOpen
+    ? "w-[290px]"
+    : isHovered
+    ? "w-[290px]"
+    : "w-[90px]"
+}
+${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
+lg:translate-x-0`}
       onMouseEnter={() => !isExpanded && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -315,12 +336,16 @@ const AppSidebar: React.FC = () => {
           )}
         </Link>
       </div>
-      <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
+      <div
+        className="flex flex-col overflow-y-auto
+duration-300 ease-linear no-scrollbar"
+      >
         <nav className="mb-6">
           <div className="flex flex-col gap-4">
             <div>
               <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                className={`mb-4 text-xs uppercase
+flex leading-[20px] text-gray-400 ${
                   !isExpanded && !isHovered
                     ? "lg:justify-center"
                     : "justify-start"
@@ -336,7 +361,8 @@ const AppSidebar: React.FC = () => {
             </div>
             <div className="">
               <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
+                className={`mb-4 text-xs uppercase
+flex leading-[20px] text-gray-400 ${
                   !isExpanded && !isHovered
                     ? "lg:justify-center"
                     : "justify-start"
