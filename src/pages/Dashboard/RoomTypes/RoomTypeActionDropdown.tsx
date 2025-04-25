@@ -27,13 +27,13 @@ const RoomTypeActionDropdown: React.FC<{
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "Yes, delete it!",
-
         cancelButtonText: "No, cancel!",
         reverseButtons: true,
       }).then(async (result) => {
         if (result.isConfirmed) {
           const response = await axiosInstance.delete(`/RoomType/${id}`);
-          if (response.status === 200 || response.status === 201) {
+          console.log(response.status)
+          if (response.status === 200) {
             Swal.fire({
               title: "Successfully",
               text:

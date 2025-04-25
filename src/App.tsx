@@ -11,6 +11,8 @@ import PrivateRoute from "./components/common/PrivateRoute";
 import UserManager from "./pages/Users/UserManager";
 import RoomTypesManager from "./pages/Dashboard/RoomTypes/RoomTypesManager";
 import SingleRoomType from "./pages/Dashboard/RoomTypes/SingleRoomType";
+import RoomTypeAdd from "./pages/Dashboard/RoomTypes/RoomTypeAdd";
+import RoomTypeEdit from "./pages/Dashboard/RoomTypes/RoomTypeEdit";
 
 export default function App() {
   return (
@@ -31,6 +33,8 @@ export default function App() {
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/profile/:id" element={<UserProfiles />} />
             <Route path="/roomTypes" element={<RoomTypesManager />} />
+            <Route path="/roomType/add" element={<RoomTypeAdd />} />
+            <Route path="/roomType/edit/:id" element={<RoomTypeEdit />} />
             <Route path="/roomType/:id" element={<SingleRoomType />} />
           </Route>
 
