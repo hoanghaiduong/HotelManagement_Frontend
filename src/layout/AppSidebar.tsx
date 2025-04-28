@@ -60,6 +60,11 @@ const navItems: NavItem[] = [
         icon: <TaskIcon />,
       },
       {
+        name: "Quản lý phòng",
+        path: "/rooms",
+        icon: <TaskIcon />,
+      },
+      {
         name: "Quản lý dịch vụ phòng",
         path: "/services",
 
