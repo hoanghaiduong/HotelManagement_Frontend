@@ -14,6 +14,7 @@ import SingleRoomType from "./pages/Dashboard/RoomTypes/SingleRoomType";
 import RoomTypeAdd from "./pages/Dashboard/RoomTypes/RoomTypeAdd";
 import RoomTypeEdit from "./pages/Dashboard/RoomTypes/RoomTypeEdit";
 import RoomManager from "./pages/Dashboard/Rooms/RoomManager";
+import AmenitiesManager from "./pages/Dashboard/Amenities/AmenitiesManager";
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="/roomType/edit/:id" element={<RoomTypeEdit />} />
             <Route path="/roomType/:id" element={<SingleRoomType />} />
             <Route path="/rooms" element={<RoomManager />} />
+            <Route path="/amenities" element={<AmenitiesManager />} />
           </Route>
 
           {/* Auth Layout */}

@@ -14,7 +14,6 @@ import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
 import path from "path";
 
-
 type NavItem = {
   name: string;
   icon: React.ReactNode;
@@ -60,6 +59,11 @@ const navItems: NavItem[] = [
         icon: <TaskIcon />,
       },
       {
+        name: "Quản lý tiện nghi",
+        path: "/amenities",
+        icon: <TaskIcon />,
+      },
+      {
         name: "Quản lý phòng",
         path: "/rooms",
         icon: <TaskIcon />,
@@ -67,7 +71,6 @@ const navItems: NavItem[] = [
       {
         name: "Quản lý dịch vụ phòng",
         path: "/services",
-
         icon: <TaskIcon />,
       },
     ],
@@ -75,15 +78,14 @@ const navItems: NavItem[] = [
 ];
 
 const othersItems: NavItem[] = [
-// {
-// icon: <PieChartIcon />,
-// name: "Charts",
-// subItems: [
-// { name: "Line Chart", path: "/line-chart",pro: false },
-// { name: "Bar Chart", path: "/bar-chart", pro:false },
-// ],
-// },
-
+  // {
+  // icon: <PieChartIcon />,
+  // name: "Charts",
+  // subItems: [
+  // { name: "Line Chart", path: "/line-chart",pro: false },
+  // { name: "Bar Chart", path: "/bar-chart", pro:false },
+  // ],
+  // },
 ];
 
 const AppSidebar: React.FC = () => {
